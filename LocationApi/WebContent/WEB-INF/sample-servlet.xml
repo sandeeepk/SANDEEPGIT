@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:p="http://www.springframework.org/schema/p" 
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -10,26 +9,21 @@
 		">
 
 	<!-- Activating annotations -->
-	<context:component-scan base-package="com.app"/>
+	<context:component-scan base-package="com.app" />
 
 
 	<!-- DB Configurations -->
 	<!-- DMDS obj -->
-	
-	<bean
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		name="dsObj"
-		p:driverClassName="oracle.jdbc.driver.OracleDriver"
-		p:url="jdbc:oracle:thin:@localhost:1521:xe"
-		p:username="sandeep"
-		p:password="sandeep"
-	/>
+
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		name="dsObj" p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:xe" p:username="sandeep"
+		p:password="sandeep" />
 	<!-- ASFB obj -->
 	<bean
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-		name="sfObj"
-	>
-		<property name="dataSource" ref="dsObj"/>
+		name="sfObj">
+		<property name="dataSource" ref="dsObj" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
@@ -45,23 +39,32 @@
 		</property>
 	</bean>
 	<!-- HT Obj -->
-	<bean
-		class="org.springframework.orm.hibernate3.HibernateTemplate"
-		name="htObj"
-	>
-		<property name="sessionFactory" ref="sfObj"/>
+	<bean class="org.springframework.orm.hibernate3.HibernateTemplate"
+		name="htObj">
+		<property name="sessionFactory" ref="sfObj" />
 	</bean>
-	
+
 	<!-- UI Config -->
 	<!-- view Resolver -->
 	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-		
-	>
-		<property name="prefix" value="/WEB-INF/jsps/"/>
-		<property name="suffix" value=".jsp"/>
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsps/" />
+		<property name="suffix" value=".jsp" />
 	</bean>
-	
+	<!-- Sending Email Using Spring EMail -->
 
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		name="mailSender">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="2602sandeep@gmail.com" />
+		<property name="password" value="sandeep@2602" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
 
+		</property>
+	</bean>
 </beans>		
